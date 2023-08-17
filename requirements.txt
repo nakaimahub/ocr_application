@@ -16,4 +16,4 @@ torchvision==0.15.2
 werkzeug==2.2.3
 wtforms==2.3.3
 torch==2.0.1
-pytorch-cuda==11.8
+torch-cuda==11.8
