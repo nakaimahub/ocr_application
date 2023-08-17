@@ -15,4 +15,4 @@ torchsummary==1.5.1
 torchvision==0.15.0
 werkzeug==2.2.3
 wtforms==2.3.3
-pytorch==2.0.0
+pytorch==1.0.2
