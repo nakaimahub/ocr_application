@@ -39,9 +39,9 @@ def allwed_file(filename):
 # Flask のインスタンスを作成
 app = Flask(__name__)
 
-@app.route('/', methods = ['GET'])
+@app.route('/form', methods = ['GET'])
 def init():
-    return render_template('index.html')
+    return render_template('form.html')
 
 # URL にアクセスがあった場合の挙動の設定
 @app.route('/predict', methods = ['POST'])
@@ -70,7 +70,7 @@ def predicts():
         pred = predict(image)
         characterName_ = getName(pred)
         return render_template('result.html', characterName=characterName_, image=base64_data)
-    return redirect('/')
+    return redirect('/form')
 
 
 # アプリケーションの実行の定義
