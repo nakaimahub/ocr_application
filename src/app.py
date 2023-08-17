@@ -39,6 +39,10 @@ def allwed_file(filename):
 # Flask のインスタンスを作成
 app = Flask(__name__)
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 @app.route('/form', methods = ['GET'])
 def init():
     return render_template('form.html')
