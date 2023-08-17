@@ -9,10 +9,11 @@ joblib==1.2.0
 markupsafe==2.1.1
 numpy==1.25.0
 pandas==1.5.3
-pytorch-lightning==2.0.4
+pytorch-lightning==2.0.7
 pytorch-model-summary==0.1.1
 torchsummary==1.5.1
-torchvision==0.15.0
+torchvision==0.15.2
 werkzeug==2.2.3
 wtforms==2.3.3
-torch==2.0.0+cu117
+torch==2.0.1
+pytorch-cuda==11.8
