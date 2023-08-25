@@ -18,7 +18,6 @@ def predict(img):
     img =img.unsqueeze(0) # 1次元増やす
     #　推論
     y = torch.argmax(net(img), dim=1).cpu().detach().numpy()
-    print(torch.argmax(net(img), dim=1).cpu().detach().numpy())
     return y
 
 CHARACTER_LIST = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
@@ -41,7 +40,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return redirect('/form')
 
 @app.route('/form', methods = ['GET'])
 def init():
@@ -60,20 +59,27 @@ def predicts():
 
         #　画像ファイルに対する処理
         #　画像書き込み用バッファを確保
-        buf = io.BytesIO()
-        #image = Image.open(file).convert('RGB')
-        image = Image.open(file).convert('L')
-        #　画像データをバッファに書き込む
-        image.save(buf, 'png')
+        buf_pred = io.BytesIO()
+        image_pred = Image.open(file).convert('L')
+        image_pred.save(buf_pred, 'png')
+
         #　バイナリデータを base64 でエンコードして utf-8 でデコード
-        base64_str = base64.b64encode(buf.getvalue()).decode('utf-8')
+        base64_str_pred = base64.b64encode(buf_pred.getvalue()).decode('utf-8')
         #　HTML 側の src の記述に合わせるために付帯情報付与する
-        base64_data = 'data:image/png;base64,{}'.format(base64_str)
+        base64_data_pred = 'data:image/png;base64,{}'.format(base64_str_pred)
 
         # 入力された画像に対して推論
-        pred = predict(image)
+        pred = predict(image_pred)
         characterName_ = getName(pred)
-        return render_template('result.html', characterName=characterName_, image=base64_data)
+
+        #　元画像データをバッファに書き込む
+        buf_org = io.BytesIO()
+        image_org = Image.open(file).convert('RGB')
+        image_org.save(buf_org, 'png')
+        base64_str_org = base64.b64encode(buf_org.getvalue()).decode('utf-8')
+        base64_data_org = 'data:image/png;base64,{}'.format(base64_str_org)
+
+        return render_template('result.html', characterName=characterName_, image_pred=base64_data_pred, image_org=base64_data_org)
     return redirect('/form')
 
 
